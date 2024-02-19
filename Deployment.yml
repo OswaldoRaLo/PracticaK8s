@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conexion-deployment
+  namespace: tareak8s
+  labels:
+    app: conexion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: conexion
+  template:
+    metadata:
+      labels:
+        app: conexion
+    spec:
+      containers:
+        - name: conexion
+          image: localhost:5000/conexion
+          ports:
+            - containerPort: 8081
+          env:
+            - name: MYSQL_HOST
+              value: "conexion-svc"
+            - name: MYSQL_USER
+              value: "root"
+            - name: MYSQL_PASSWORD
+              value: "1234"
+            - name: MYSQL_DATABASE
+              value: "mysql_docker"
